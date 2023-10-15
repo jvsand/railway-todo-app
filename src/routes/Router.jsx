@@ -16,20 +16,20 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path="/signin" component={SignIn} />
-          <Route path="/signup" component={SignUp} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
         {auth ? (
           <>
-            <Route path="/" component={Home} />
-            <Route path="/task/new" component={NewTask} />
-            <Route path="/list/new" component={NewList} />
-            <Route path="/lists/:listId/tasks/:taskId" component={EditTask} />
-            <Route path="/lists/:listId/edit" component={EditList} />
+            <Route path="/" element={<Home />} />
+            <Route path="/task/new" element={<NewTask />} />
+            <Route path="/list/new" element={<NewList />} />
+            <Route path="/lists/:listId/tasks/:taskId" element={<EditTask />} />
+            <Route path="/lists/:listId/edit" element={<EditList />} />
           </>
         ) : (
           <Route path="/" element={<Navigate to="/signin" />} />
         )}
-        <Route component={NotFound} />
+        <Route element={<NotFound />} />
         </Routes>
     </BrowserRouter>
   )

@@ -1,5 +1,5 @@
 import React from "react";
-import { createRoot } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import "./index.css";
 import { store } from "./store"
 import { Provider } from 'react-redux'; // 必要に応じて追加
