@@ -19,8 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "format": "prettier --write \"src/**/*.js,.jsx\"",
-    "eslint": "eslint . --ext .js,.jsx"
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "eslint": "eslint . --ext .js,.jsx --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -41,6 +41,7 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-airbnb": "^19.0.4"
+    "eslint-config-airbnb": "^19.0.4",
+    "prettier": "3.0.3"
   }
 }

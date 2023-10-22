@@ -19,7 +19,8 @@ export function SignIn() {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const onSignIn = () => {
-    axios.post(`${url}/signin`, { email, password })
+    axios
+      .post(`${url}/signin`, { email, password })
       .then((res) => {
         setCookie('token', res.data.token);
         dispatch(signIn());
@@ -44,13 +45,23 @@ export function SignIn() {
         <form className="signin-form">
           <label className="email-label">メールアドレス</label>
           <br />
-          <input type="email" className="email-input" onChange={handleEmailChange} />
+          <input
+            type="email"
+            className="email-input"
+            onChange={handleEmailChange}
+          />
           <br />
           <label className="password-label">パスワード</label>
           <br />
-          <input type="password" className="password-input" onChange={handlePasswordChange} />
+          <input
+            type="password"
+            className="password-input"
+            onChange={handlePasswordChange}
+          />
           <br />
-          <button type="button" className="signin-button" onClick={onSignIn}>サインイン</button>
+          <button type="button" className="signin-button" onClick={onSignIn}>
+            サインイン
+          </button>
         </form>
         <Link to="/signup">新規作成</Link>
       </main>

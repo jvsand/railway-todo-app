@@ -25,11 +25,12 @@ export function EditTask() {
       done: isDone,
     };
 
-    axios.put(`${url}/lists/${listId}/tasks/${taskId}`, data, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`,
-      },
-    })
+    axios
+      .put(`${url}/lists/${listId}/tasks/${taskId}`, data, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
         console.log(res.data);
         navigate('/');
@@ -40,11 +41,12 @@ export function EditTask() {
   };
 
   const onDeleteTask = () => {
-    axios.delete(`${url}/lists/${listId}/tasks/${taskId}`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`,
-      },
-    })
+    axios
+      .delete(`${url}/lists/${listId}/tasks/${taskId}`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then(() => {
         navigate('/');
       })
@@ -54,11 +56,12 @@ export function EditTask() {
   };
 
   useEffect(() => {
-    axios.get(`${url}/lists/${listId}/tasks/${taskId}`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`,
-      },
-    })
+    axios
+      .get(`${url}/lists/${listId}/tasks/${taskId}`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
         const task = res.data;
         setTitle(task.title);
@@ -79,20 +82,56 @@ export function EditTask() {
         <form className="edit-task-form">
           <label>タイトル</label>
           <br />
-          <input type="text" onChange={handleTitleChange} className="edit-task-title" value={title} />
+          <input
+            type="text"
+            onChange={handleTitleChange}
+            className="edit-task-title"
+            value={title}
+          />
           <br />
           <label>詳細</label>
           <br />
-          <textarea type="text" onChange={handleDetailChange} className="edit-task-detail" value={detail} />
+          <textarea
+            type="text"
+            onChange={handleDetailChange}
+            className="edit-task-detail"
+            value={detail}
+          />
           <br />
           <div>
-            <input type="radio" id="todo" name="status" value="todo" onChange={handleIsDoneChange} checked={isDone === false ? 'checked' : ''} />
+            <input
+              type="radio"
+              id="todo"
+              name="status"
+              value="todo"
+              onChange={handleIsDoneChange}
+              checked={isDone === false ? 'checked' : ''}
+            />
             未完了
-            <input type="radio" id="done" name="status" value="done" onChange={handleIsDoneChange} checked={isDone === true ? 'checked' : ''} />
+            <input
+              type="radio"
+              id="done"
+              name="status"
+              value="done"
+              onChange={handleIsDoneChange}
+              checked={isDone === true ? 'checked' : ''}
+            />
             完了
           </div>
-          <button type="button" className="delete-task-button" onClick={onDeleteTask}>削除</button>
-          <button type="button" className="edit-task-button" onClick={onUpdateTask}>更新</button>
+          <button
+            type="button"
+            className="delete-task-button"
+            onClick={onDeleteTask}
+          >
+            削除
+          </button>
+          <button
+            type="button"
+            className="edit-task-button"
+            onClick={onUpdateTask}
+          >
+            更新
+          </button>
         </form>
       </main>
     </div>

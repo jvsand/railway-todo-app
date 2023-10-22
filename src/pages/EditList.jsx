@@ -18,11 +18,12 @@ export function EditList() {
       title,
     };
 
-    axios.put(`${url}/lists/${listId}`, data, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`,
-      },
-    })
+    axios
+      .put(`${url}/lists/${listId}`, data, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then(() => {
         navigate('/');
       })
@@ -32,11 +33,12 @@ export function EditList() {
   };
 
   const onDeleteList = () => {
-    axios.delete(`${url}/lists/${listId}`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`,
-      },
-    })
+    axios
+      .delete(`${url}/lists/${listId}`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then(() => {
         navigate('/');
       })
@@ -46,11 +48,12 @@ export function EditList() {
   };
 
   useEffect(() => {
-    axios.get(`${url}/lists/${listId}`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`,
-      },
-    })
+    axios
+      .get(`${url}/lists/${listId}`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
         const list = res.data;
         setTitle(list.title);
@@ -69,10 +72,27 @@ export function EditList() {
         <form className="edit-list-form">
           <label>タイトル</label>
           <br />
-          <input type="text" className="edit-list-title" value={title} onChange={handleTitleChange} />
+          <input
+            type="text"
+            className="edit-list-title"
+            value={title}
+            onChange={handleTitleChange}
+          />
           <br />
-          <button type="button" className="delete-list-button" onClick={onDeleteList}>削除</button>
-          <button type="button" className="edit-list-button" onClick={onUpdateList}>更新</button>
+          <button
+            type="button"
+            className="delete-list-button"
+            onClick={onDeleteList}
+          >
+            削除
+          </button>
+          <button
+            type="button"
+            className="edit-list-button"
+            onClick={onUpdateList}
+          >
+            更新
+          </button>
         </form>
       </main>
     </div>

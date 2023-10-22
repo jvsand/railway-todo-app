@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { url } from '../const';
 import { Header } from '../components/Header';
-import './newTask.css';
+import './newTask.css'; // CSSファイルのファイル名を正しく指定
 import { useNavigate } from 'react-router-dom';
 
 export function NewTask() {
@@ -24,11 +24,12 @@ export function NewTask() {
       done: false,
     };
 
-    axios.post(`${url}/lists/${selectListId}/tasks`, data, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`,
-      },
-    })
+    axios
+      .post(`${url}/lists/${selectListId}/tasks`, data, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then(() => {
         navigate('/');
       })
@@ -38,11 +39,12 @@ export function NewTask() {
   };
 
   useEffect(() => {
-    axios.get(`${url}/lists`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`,
-      },
-    })
+    axios
+      .get(`${url}/lists`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
         setLists(res.data);
         setSelectListId(res.data[0]?.id);
@@ -59,23 +61,44 @@ export function NewTask() {
         <h2>タスク新規作成</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="new-task-form">
-          <label>リスト</label>
+          <label htmlFor="list">リスト</label> {/* htmlFor属性を追加 */}
           <br />
-          <select onChange={(e) => handleSelectList(e.target.value)} className="new-task-select-list">
+          <select
+            onChange={(e) => handleSelectList(e.target.value)}
+            className="new-task-select-list"
+          >
             {lists.map((list, key) => (
-              <option key={key} className="list-item" value={list.id}>{list.title}</option>
+              <option key={key} value={list.id}>
+                {list.title}
+              </option>
             ))}
           </select>
           <br />
-          <label>タイトル</label>
+          <label htmlFor="title">タイトル</label> {/* htmlFor属性を追加 */}
           <br />
-          <input type="text" onChange={handleTitleChange} className="new-task-title" />
+          <input
+            type="text"
+            id="title"
+            onChange={handleTitleChange}
+            className="new-task-title"
+          />
           <br />
-          <label>詳細</label>
+          <label htmlFor="detail">詳細</label> {/* htmlFor属性を追加 */}
           <br />
-          <textarea type="text" onChange={handleDetailChange} className="new-task-detail" />
+          <textarea
+            id="detail"
+            type="text"
+            onChange={handleDetailChange}
+            className="new-task-detail"
+          />
           <br />
-          <button type="button" className="new-task-button" onClick={onCreateTask}>作成</button>
+          <button
+            type="button"
+            className="new-task-button"
+            onClick={onCreateTask}
+          >
+            作成
+          </button>
         </form>
       </main>
     </div>

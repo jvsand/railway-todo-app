@@ -11,14 +11,13 @@ const root = createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {' '}
-      {/* Reduxストアを提供 */}
       <CookiesProvider>
         <App />
       </CookiesProvider>
     </Provider>
   </React.StrictMode>,
 );
+// export default store;
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

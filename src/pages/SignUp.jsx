@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, Redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { signIn } from '../authSlice';
 import { Header } from '../components/Header';
 import { url } from '../const';
@@ -16,7 +16,7 @@ export function SignUp() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessge] = useState();
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [setCookie] = useCookies();
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handleNameChange = (e) => setName(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -27,7 +27,8 @@ export function SignUp() {
       password,
     };
 
-    axios.post(`${url}/users`, data)
+    axios
+      .post(`${url}/users`, data)
       .then((res) => {
         const { token } = res.data;
         dispatch(signIn());
@@ -52,17 +53,31 @@ export function SignUp() {
         <form className="signup-form">
           <label>メールアドレス</label>
           <br />
-          <input type="email" onChange={handleEmailChange} className="email-input" />
+          <input
+            type="email"
+            onChange={handleEmailChange}
+            className="email-input"
+          />
           <br />
           <label>ユーザ名</label>
           <br />
-          <input type="text" onChange={handleNameChange} className="name-input" />
+          <input
+            type="text"
+            onChange={handleNameChange}
+            className="name-input"
+          />
           <br />
           <label>パスワード</label>
           <br />
-          <input type="password" onChange={handlePasswordChange} className="password-input" />
+          <input
+            type="password"
+            onChange={handlePasswordChange}
+            className="password-input"
+          />
           <br />
-          <button type="button" onClick={onSignUp} className="signup-button">作成</button>
+          <button type="button" onClick={onSignUp} className="signup-button">
+            作成
+          </button>
         </form>
       </main>
     </div>
