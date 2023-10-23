@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { Redirect, useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Header } from '../components/Header';
-import './signin.css';
+import './signin.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { signIn } from '../authSlice';
 import { url } from '../const';
@@ -31,11 +31,11 @@ export function SignIn() {
       });
   };
 
-  if (auth) {
-    navigate('/');
-    return null; // または適切なコンポーネントを返す
-  }
-
+  useEffect(() => {
+    if (auth) {
+      navigate('/');
+    }
+  }, [auth, navigate]);
   return (
     <div>
       <Header />

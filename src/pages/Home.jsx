@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { url } from '../const';
 import Header from '../components/Header';
+import './home.scss';
 
 export function Home() {
   const [isDoneDisplay, setIsDoneDisplay] = useState('todo');
@@ -83,7 +84,7 @@ export function Home() {
             </div>
           </div>
           <ul className="list-tab">
-            {lists.map((list,key) => {
+            {lists.map((list, key) => {
               const isActive = list.id === selectListId;
               return (
                 <li

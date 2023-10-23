@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { url } from '../const';
 import { Header } from '../components/Header';
-import './newTask.css'; // CSSファイルのファイル名を正しく指定
+import './newTask.scss';
 import { useNavigate } from 'react-router-dom';
 
 export function NewTask() {
@@ -52,7 +52,7 @@ export function NewTask() {
       .catch((err) => {
         setErrorMessage(`リストの取得に失敗しました。${err}`);
       });
-  }, []);
+  }, [cookies.token]);
 
   return (
     <div>

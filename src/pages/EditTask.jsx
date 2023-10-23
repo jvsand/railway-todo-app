@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
 import { url } from '../const';
 import { Header } from '../components/Header';
-import './editTask.css';
+import './editTask.scss';
 
 export function EditTask() {
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ export function EditTask() {
       .catch((err) => {
         setErrorMessage(`タスク情報の取得に失敗しました。${err}`);
       });
-  }, []);
+  }, [cookies.token, listId, taskId]);
 
   return (
     <div>
