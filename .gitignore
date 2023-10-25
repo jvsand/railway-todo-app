@@ -26,3 +26,10 @@ yarn-error.log*
 
 .yarn
 yarn.lock
+
+.prettierrc
+.eslintrc.json
+.eslintignore
+
+package-lock.json
+yarn.lock
