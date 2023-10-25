@@ -17,11 +17,26 @@ export function NewTask() {
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleSelectList = (id) => setSelectListId(id);
+  
+  // 期日のフォーマットを行う関数
+  function formatLimitDate(limit) {
+    const date = new Date(limit);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hour = date.getHours().toString().padStart(2, '0');
+    const minute = date.getMinutes().toString().padStart(2, '0');
+    return `${year}年${month}月${day}日 ${hour}:${minute}`;
+  }
+  
+  // formattedLimitを宣言
+  const formattedLimit = formatLimitDate(new Date().toISOString());
   const onCreateTask = () => {
     const data = {
       title,
       detail,
       done: false,
+      limit: new Date().toISOString(),
     };
 
     axios
@@ -83,6 +98,7 @@ export function NewTask() {
             className="new-task-title"
           />
           <br />
+          <p>期日: {formattedLimit}</p>
           <label htmlFor="detail">詳細</label> {/* htmlFor属性を追加 */}
           <br />
           <textarea
