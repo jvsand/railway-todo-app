@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
+import './index.scss';
 import { Provider } from 'react-redux'; // 必要に応じて追加
 import { CookiesProvider } from 'react-cookie'; // 必要に応じて追加
 import { store } from './store';

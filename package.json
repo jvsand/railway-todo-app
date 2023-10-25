@@ -21,7 +21,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "eslint": "eslint . --ext .js,.jsx --fix"
+    "eslint": "eslint . --ext .js,.jsx --fix",
+    "sass": "sass src/:dist"
+
   },
   "eslintConfig": {
     "extends": [
