@@ -5,12 +5,14 @@ import { url } from '../const';
 import { Header } from '../components/Header';
 import './newTask.scss';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from '../components/DatePicker';
 
 export function NewTask() {
   const [selectListId, setSelectListId] = useState();
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null); // 新しく選択された日付を保持するステート
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
   const navigate = useNavigate();
@@ -19,24 +21,38 @@ export function NewTask() {
   const handleSelectList = (id) => setSelectListId(id);
   
   // 期日のフォーマットを行う関数
-  function formatLimitDate(limit) {
-    const date = new Date(limit);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hour = date.getHours().toString().padStart(2, '0');
-    const minute = date.getMinutes().toString().padStart(2, '0');
-    return `${year}年${month}月${day}日 ${hour}:${minute}`;
-  }
+  // function formatLimitDate(limit) {
+  //   const date = new Date(limit);
+  //   const year = date.getFullYear();
+  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  //   const day = date.getDate().toString().padStart(2, '0');
+  //   const hour = date.getHours().toString().padStart(2, '0');
+  //   const minute = date.getMinutes().toString().padStart(2, '0');
+  //   return `${year}年${month}月${day}日 ${hour}:${minute}`;
+  // }
   
   // formattedLimitを宣言
-  const formattedLimit = formatLimitDate(new Date().toISOString());
+  // const formattedLimit = formatLimitDate(new Date().toISOString());
+  
+  // 日付のフォーマットを行う関数
+  const formatSelectedDate = (date) => {
+    if (date) {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      const hour = date.getHours().toString().padStart(2, '0');
+      const minute = date.getMinutes().toString().padStart(2, '0');
+      return `${year}年${month}月${day}日 ${hour}:${minute}`;
+    }
+    return '日付未選択';
+  };
+
   const onCreateTask = () => {
     const data = {
       title,
       detail,
       done: false,
-      limit: new Date().toISOString(),
+      limit: selectedDate.toISOString(),
     };
 
     axios
@@ -98,7 +114,6 @@ export function NewTask() {
             className="new-task-title"
           />
           <br />
-          <p>期日: {formattedLimit}</p>
           <label htmlFor="detail">詳細</label> {/* htmlFor属性を追加 */}
           <br />
           <textarea
@@ -107,6 +122,9 @@ export function NewTask() {
             onChange={handleDetailChange}
             className="new-task-detail"
           />
+          <br />
+          <p>期日: {formatSelectedDate(selectedDate)}</p>
+          <DatePicker onDateChange={setSelectedDate} />
           <br />
           <button
             type="button"
