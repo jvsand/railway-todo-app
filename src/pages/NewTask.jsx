@@ -12,30 +12,18 @@ export function NewTask() {
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null); // 新しく選択された日付を保持するステート
+  const [ , setSelectedDate] = useState(null); // 新しく選択された日付を保持するステート
+  const [disp_limit, setDispLimit] = useState('日付未選択'); // 表示用の日付フォーマット
+  const [req_limit, setReqLimit] = useState(null); // リクエスト用の日付フォーマット
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
   const navigate = useNavigate();
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleSelectList = (id) => setSelectListId(id);
-  
-  // 期日のフォーマットを行う関数
-  // function formatLimitDate(limit) {
-  //   const date = new Date(limit);
-  //   const year = date.getFullYear();
-  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  //   const day = date.getDate().toString().padStart(2, '0');
-  //   const hour = date.getHours().toString().padStart(2, '0');
-  //   const minute = date.getMinutes().toString().padStart(2, '0');
-  //   return `${year}年${month}月${day}日 ${hour}:${minute}`;
-  // }
-  
-  // formattedLimitを宣言
-  // const formattedLimit = formatLimitDate(new Date().toISOString());
-  
+
   // 日付のフォーマットを行う関数
-  const formatSelectedDate = (date) => {
+  const formatDisplayDate = (date) => {
     if (date) {
       const year = date.getFullYear();
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -46,13 +34,30 @@ export function NewTask() {
     }
     return '日付未選択';
   };
+  const formatRequestDate = (date) => {
+    if (date) {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      const hour = date.getHours().toString().padStart(2, '0');
+      const minute = date.getMinutes().toString().padStart(2, '0');
+      return `${year}-${month}-${day}T${hour}:${minute}:00Z`;
+    }
+    return null;
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setDispLimit(formatDisplayDate(date)); // 表示用フォーマットに変換
+    setReqLimit(formatRequestDate(date)); // リクエスト用フォーマットに変換
+  };
 
   const onCreateTask = () => {
     const data = {
       title,
       detail,
       done: false,
-      limit: selectedDate.toISOString(),
+      limit: req_limit,
     };
 
     axios
@@ -123,8 +128,8 @@ export function NewTask() {
             className="new-task-detail"
           />
           <br />
-          <p>期日: {formatSelectedDate(selectedDate)}</p>
-          <DatePicker onDateChange={setSelectedDate} />
+          <p>期日: {disp_limit}</p>
+          <DatePicker onDateChange={handleDateChange} />
           <br />
           <button
             type="button"

@@ -128,6 +128,17 @@ function Tasks(props) {
   const { tasks, selectListId, isDoneDisplay } = props;
   if (tasks === null) return null;
 
+  // タスクの期日を表示
+  const formatLimitDate = (limit) => {
+    const date = new Date(limit);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hour = date.getHours().toString().padStart(2, '0');
+    const minute = date.getMinutes().toString().padStart(2, '0');
+    return `${year}年${month}月${day}日 ${hour}:${minute}`;
+  };
+
   const filteredTasks =
     isDoneDisplay === 'done'
       ? tasks.filter((task) => task.done === true)
@@ -144,6 +155,8 @@ function Tasks(props) {
             {task.title}
             <br />
             {task.done ? '完了' : '未完了'}
+            <br />
+            期日: {formatLimitDate(task.limit)} {/* Display the due date here */}
           </Link>
         </li>
       ))}
