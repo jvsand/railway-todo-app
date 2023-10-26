@@ -144,17 +144,17 @@ function Tasks(props) {
     const currentDate = new Date();
     const dueDate = new Date(limit);
     const timeRemaining = dueDate - currentDate;
-    const date = new Date(limit);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hour = date.getHours().toString().padStart(2, '0');
-    const minute = date.getMinutes().toString().padStart(2, '0');
     const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-    const hoursRemaining = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutesRemaining = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-
-  return `${daysRemaining}日 ${hoursRemaining}時間 ${minutesRemaining}分`;
+    const hoursRemaining = Math.floor(
+      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+    );
+    const minutesRemaining = Math.floor(
+      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60),
+    );
+    if (timeRemaining < 0) {
+      return '期日を過ぎています';
+    }
+    return `${daysRemaining}日 ${hoursRemaining}時間 ${minutesRemaining}分`;
   };
 
   const filteredTasks =
