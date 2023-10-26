@@ -30,8 +30,6 @@ export function NewTask() {
       const year = date.getFullYear();
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
       const day = date.getDate().toString().padStart(2, '0');
-      // const hour = date.getHours().toString().padStart(2, '0');
-      // const minute = date.getMinutes().toString().padStart(2, '0');
       return `${year}年${month}月${day}日 `;
     }
     return '日付未選択';
@@ -155,16 +153,6 @@ export function NewTask() {
             <option value={30}>30分</option>
             <option value={45}>45分</option>
           </select>
-          {/* <select
-            onChange={handleMinuteChange}
-            className="new-task-minute"
-          >
-            {Array.from({ length: 60 }, (_, i) => (
-              <option key={i} value={i}>
-                {i}
-              </option>
-            ))}
-          </select> */}
           <DatePicker onDateChange={handleDateChange} />
           <br />
           <button
