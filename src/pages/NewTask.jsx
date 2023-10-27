@@ -12,7 +12,7 @@ export function NewTask() {
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
-  const [, setSelectedDate] = useState(null); // 新しく選択された日付を保持するステート
+  const [selectedDate, setSelectedDate] = useState(null); // 新しく選択された日付を保持するステート
   const [disp_limit, setDispLimit] = useState('日付未選択'); // 表示用の日付フォーマット
   const [req_limit, setReqLimit] = useState(null); // リクエスト用の日付フォーマット
   const [selectedHour, setSelectedHour] = useState(0); // 選択された時間
@@ -37,10 +37,11 @@ export function NewTask() {
 
   const handleHourChange = (e) => {
     setSelectedHour(parseInt(e.target.value, 10));
+    setReqLimit(formatRequestDate(selectedDate, parseInt(e.target.value, 10), selectedMinute));
   };
-
   const handleMinuteChange = (e) => {
     setSelectedMinute(parseInt(e.target.value, 10));
+    setReqLimit(formatRequestDate(selectedDate, selectedHour, parseInt(e.target.value, 10)));
   };
 
   const formatRequestDate = (date, hour, minute) => {
