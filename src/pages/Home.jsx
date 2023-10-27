@@ -131,6 +131,8 @@ function Tasks(props) {
   // タスクの期日を表示
   const formatLimitDate = (limit) => {
     const date = new Date(limit);
+    // 時間を9時間前に設定
+    date.setHours(date.getHours() - 9);
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
