@@ -128,6 +128,37 @@ function Tasks(props) {
   const { tasks, selectListId, isDoneDisplay } = props;
   if (tasks === null) return null;
 
+  // タスクの期日を表示
+  const formatLimitDate = (limit) => {
+    const date = new Date(limit);
+    // 時間を9時間前に設定
+    date.setHours(date.getHours() - 9);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hour = date.getHours().toString().padStart(2, '0');
+    const minute = date.getMinutes().toString().padStart(2, '0');
+    return `${year}年${month}月${day}日 ${hour}:${minute}`;
+  };
+
+  // 残り時間の計算
+  const calculateRemainingTime = (limit) => {
+    const currentDate = new Date();
+    const dueDate = new Date(limit);
+    const timeRemaining = dueDate - currentDate;
+    const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hoursRemaining = Math.floor(
+      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+    );
+    const minutesRemaining = Math.floor(
+      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60),
+    );
+    if (timeRemaining < 0) {
+      return '期日を過ぎています';
+    }
+    return `${daysRemaining}日 ${hoursRemaining}時間 ${minutesRemaining}分`;
+  };
+
   const filteredTasks =
     isDoneDisplay === 'done'
       ? tasks.filter((task) => task.done === true)
@@ -144,6 +175,9 @@ function Tasks(props) {
             {task.title}
             <br />
             {task.done ? '完了' : '未完了'}
+            <br />
+            期日: {formatLimitDate(task.limit)}
+            あと：{calculateRemainingTime(task.limit)}
           </Link>
         </li>
       ))}
